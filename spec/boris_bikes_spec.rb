@@ -15,7 +15,8 @@ describe DockingStation do
     end
     it "Allows a bike to be stored" do
         bike = subject.release_bike
-        storage = subject.store(bike)
-        expect(storage).to include(bike)
+        expect(subject.store(bike).include?(bike)).to eq(true)
+        # storage = subject.store(bike)
+        # expect().to include(bike)
     end
 end
