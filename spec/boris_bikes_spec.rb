@@ -10,4 +10,12 @@ describe DockingStation do
     it 'returns true when asked if bike is working' do
     expect(subject.release_bike.working?).to eq (true)
     end
+    it "Docking Station has method of storing a bike" do
+        expect(subject).to respond_to(:store).with(1).argument
+    end
+    it "Allows a bike to be stored" do
+        bike = subject.release_bike
+        storage = subject.store(bike)
+        expect(storage).to include(bike)
+    end
 end
