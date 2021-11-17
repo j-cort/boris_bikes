@@ -9,15 +9,27 @@ class DockingStation
     end
     
     def release_bike
-        if @stored_bikes.empty?
+        if empty?
             raise "There are no bikes!"
         else
             return Bike.new
         end
     end
 
+    private 
+
+    def empty? 
+        @stored_bikes.empty?
+    end
+
+    def full?
+        @stored_bikes.count >= 20
+    end
+
+    public
+
     def store(bike)
-        if @stored_bikes.count >= 20
+        if full?
             raise "Bike rack full!"
         end
         @stored_bikes.push(bike)
