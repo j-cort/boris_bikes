@@ -1,13 +1,25 @@
 require_relative "./bike.rb"
 
 class DockingStation
+
+    attr_reader :stored_bikes
+
+    def initialize
+        @stored_bikes = []
+    end
     
     def release_bike
-        return Bike.new
+        if @stored_bikes.empty?
+            raise "There are no bikes!"
+        else
+            return Bike.new
+        end
     end
 
     def store(bike)
-        @stored_bikes = []
+        if @stored_bikes.length > 0
+            raise "Bike rack full!"
+        end
         @stored_bikes.push(bike)
     end
 end
