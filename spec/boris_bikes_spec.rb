@@ -29,11 +29,11 @@ describe DockingStation do
         expect{subject.release_bike}.to raise_error
     end
 
-    it "Raises an error when more than 1 bike is tried to be stored" do
-        bike = Bike.new
-        bike2 = Bike.new
-        dockingstation = DockingStation.new
-        dockingstation.store(bike)   
-        expect{dockingstation.store(bike2)}.to raise_error
+    it "Raises an error when more than 20 biked is tried to be stored" do
+        
+        
+        dockingstation = DockingStation.new        
+        20.times { dockingstation.store Bike.new }
+        expect{dockingstation.store(Bike.new)}.to raise_error
     end
 end

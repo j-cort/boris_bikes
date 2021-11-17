@@ -17,7 +17,7 @@ class DockingStation
     end
 
     def store(bike)
-        if @stored_bikes.length > 0
+        if @stored_bikes.count >= 20
             raise "Bike rack full!"
         end
         @stored_bikes.push(bike)
