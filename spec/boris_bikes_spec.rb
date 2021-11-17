@@ -26,12 +26,13 @@ describe DockingStation do
     end
 
     it "Raises an error when bike is requested when are no bikes" do
-        expect{subject.release_bike}.to raise_error
+        
+        expect{subject(0).release_bike}.to raise_error
     end
 
     it "Raises an error when more than 20 biked is tried to be stored" do
         dockingstation = DockingStation.new        
-        dockingstation.capacity.times { dockingstation.store Bike.new }
+        (dockingstation.capacity/2).times { dockingstation.store Bike.new }
         expect{dockingstation.store(Bike.new)}.to raise_error
     end
 
@@ -43,5 +44,27 @@ describe DockingStation do
     it "Default capacity is set to 20" do
         dockingstation = DockingStation.new
         expect(dockingstation.capacity).to eq(20)
+    end
+
+    it "allows a bike to be reported as not working" do
+        station = DockingStation.new
+        bike = Bike.new
+        station.store(bike, "broken")
+
+        expect(bike.working?).to eq false
+    end
+    it "aceepts broken and working bikes" do
+        station = DockingStation.new
+        bike = Bike.new
+        expect(station.store(bike, "broken").include?(bike)).to eq(true)
+
+        
+    end
+    it "does not release broken bikes" do
+        station = DockingStation.new
+        bike = Bike.new
+        station.store(bike, "broken")
+
+        expect(station.release_bike.working?).to eq true 
     end
 end

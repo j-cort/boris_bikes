@@ -9,13 +9,14 @@ class DockingStation
     def initialize(capacity = DEFAULT_CAPACITY)
         @stored_bikes = []
         @capacity = capacity
+        (capacity/2).times {@stored_bikes << Bike.new}
     end
     
     def release_bike
         if empty?
             raise "There are no bikes!"
         else
-            return Bike.new
+            @stored_bikes.shift
         end
     end
 
@@ -31,10 +32,14 @@ class DockingStation
 
     public
 
-    def store(bike)
+    def store(bike, condition = 'working')
         if full?
             raise "Bike rack full!"
         end
+        if condition == 'broken'
+            bike.report
+        end
+
         @stored_bikes.push(bike)
     end
 end
