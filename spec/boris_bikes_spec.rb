@@ -5,13 +5,13 @@ describe DockingStation do
         expect(subject).to respond_to :release_bike
     end
     it "Docking station creates an new bike when release_bike is called" do
-    bike = Bike.new
+    bike = double(:bike)
     dockingstation = DockingStation.new
     dockingstation.store(bike)    
     expect(dockingstation.release_bike).to be_kind_of(Bike)
     end
     it 'returns true when asked if bike is working' do
-    bike = Bike.new
+    bike = double("bike", :working? => true, :report => false)
     dockingstation = DockingStation.new
     dockingstation.store(bike)    
     expect(dockingstation.release_bike.working?).to eq (true)
@@ -20,7 +20,7 @@ describe DockingStation do
         expect(subject).to respond_to(:store).with(1).argument
     end
     it "Allows a bike to be stored" do
-        bike = Bike.new
+        bike = double(:bike)
         dockingstation = DockingStation.new
         expect(dockingstation.store(bike).include?(bike)).to eq(true)
     end
@@ -32,8 +32,8 @@ describe DockingStation do
 
     it "Raises an error when more than 20 biked is tried to be stored" do
         dockingstation = DockingStation.new        
-        (dockingstation.capacity/2).times { dockingstation.store Bike.new }
-        expect{dockingstation.store(Bike.new)}.to raise_error
+        (dockingstation.capacity/2).times { dockingstation.store double(:bike) }
+        expect{dockingstation.store(double(:bike))}.to raise_error
     end
 
     it "Allows capacity to be set upon creation" do
@@ -48,23 +48,19 @@ describe DockingStation do
 
     it "allows a bike to be reported as not working" do
         station = DockingStation.new
-        bike = Bike.new
+        bike = double("bike", :working? => false, :report => false)
         station.store(bike, "broken")
-
         expect(bike.working?).to eq false
     end
     it "aceepts broken and working bikes" do
         station = DockingStation.new
-        bike = Bike.new
+        bike = double("bike", :working? => true, :report => false)
         expect(station.store(bike, "broken").include?(bike)).to eq(true)
-
-        
     end
     it "does not release broken bikes" do
         station = DockingStation.new
-        bike = Bike.new
+        bike = double("bike", :working? => true, :report => false)
         station.store(bike, "broken")
-
         expect(station.release_bike.working?).to eq true 
     end
 end
