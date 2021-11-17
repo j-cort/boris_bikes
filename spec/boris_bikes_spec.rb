@@ -30,10 +30,18 @@ describe DockingStation do
     end
 
     it "Raises an error when more than 20 biked is tried to be stored" do
-        
-        
         dockingstation = DockingStation.new        
-        20.times { dockingstation.store Bike.new }
+        dockingstation.capacity.times { dockingstation.store Bike.new }
         expect{dockingstation.store(Bike.new)}.to raise_error
+    end
+
+    it "Allows capacity to be set upon creation" do
+        dockingstation = DockingStation.new(22)
+        expect(dockingstation.capacity).to eq(22)
+    end
+
+    it "Default capacity is set to 20" do
+        dockingstation = DockingStation.new
+        expect(dockingstation.capacity).to eq(20)
     end
 end
